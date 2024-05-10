@@ -1,0 +1,4 @@
+- name: Add pip repository config
+  ansible.builtin.template:
+    src: pip.conf
+    dest: /etc/

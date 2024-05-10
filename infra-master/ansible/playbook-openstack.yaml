@@ -1,0 +1,12 @@
+- name: Setup ceph cluster nodes
+  hosts: openstack_cluster,openstack_controllers
+  become: true
+  vars:
+    ntp_server: 10.10.10.130
+  roles:
+    - { role: common, tags: [common], ntp_server: 10.10.10.130 }
+    - { role: openstack_common, tags: [openstack_common]}
+    - { role: docker_registry, tags: [docker_registry] }
+    - { role: pip_repository, tags: [pip_repository] }
+    # - { role: sshd, tags: [sshd] }
+    # - { role: user, tags: [user], username: root }

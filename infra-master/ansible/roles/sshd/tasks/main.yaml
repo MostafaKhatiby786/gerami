@@ -1,0 +1,6 @@
+- name: Ensure sshd config is correct
+  template:
+    src: sshd_config
+    dest: /etc/ssh/
+  notify:
+    - restart sshd daemon

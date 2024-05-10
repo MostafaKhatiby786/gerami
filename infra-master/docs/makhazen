@@ -1,0 +1,45 @@
+change apt sources.list on all nodes
+########################
+
+1- sudo sed -i 's/archive.ubuntu.com\/ubuntu/10.10.10.40:8081\/repository\/apt-proxy1/g' /etc/apt/sources.list
+2- sudo apt update
+3- sudo apt upgrade
+-------------------------------------------------------------------------------------------------------------------------------
+
+add docker.list to /etc/apt/sources.list.d/   on all workers and masters nodes and monitoring nodes
+###########################################
+1- sudo mkdir /etc/apt/keyrings
+2-  cd /etc/apt/keyrings
+3- sudo wget http://10.10.10.40:8081/repository/file-server/apt-key-component/docker.gpg 
+4- add this line to /etc/apt/sourced.list.d/docker.list: 
+ sudo vi /etc/apt/sources.list.d/docker.list
+ deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] http://10.10.10.40:8081/repository/apt-docker/ focal stable
+5- sudo apt update
+-------------------------------------------------------------------------------------------------------------------------------
+
+add kuber.list to /etc/apt/sources.list.d/  on all workers and masters nodes
+###########################################
+ 
+1- sudo mkdir /etc/apt/keyrings
+2- cd /etc/apt/keyrings
+3- sudo wget http://10.10.10.40:8081/repository/file-server/apt-key-component/kuber.gpg 
+4- add this line to /etc/apt/sourced.list.d/kuber.list:
+   sudo vi /etc/apt/sources.list.d/kuber.list 
+   deb [ signed-by=/etc/apt/keyrings/kuber.gpg ] http://10.10.10.40:8081/repository/kubernetes-proxy/ kubernetes-xenial main
+5- sudo apt update
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+
+add elasticsearch.list to /etc/apt/sources.list.d/  on elasticsearch and redis and kafka nodes
+###########################################
+
+ 
+1- sudo mkdir /etc/apt/keyrings
+2- cd /etc/apt/keyrings
+3- sudo wget http://10.10.10.40:8081/repository/file-server/apt-key-component/GPG-KEY-elasticsearch
+4- add this line to /etc/apt/sourced.list.d/elasticsearch.list:
+   sudo vi /etc/apt/sources.list.d/elasticsearch.list 
+   deb [ signed-by=/etc/apt/keyrings/GPG-KEY-elasticsearch ] http://10.10.10.40:8081/repository/elasticrepo/ stable main
+5- sudo apt update
+-------------------------------------------------------------------------------------------------------------------------------

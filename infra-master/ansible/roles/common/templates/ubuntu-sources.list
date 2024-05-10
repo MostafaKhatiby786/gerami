@@ -1,0 +1,4 @@
+deb [allow-insecure=yes,trusted=yes,arch=amd64] {{ ubuntu_repo }} {{ ansible_distribution_release }} main restricted universe multiverse
+deb [allow-insecure=yes,trusted=yes,arch=amd64] {{ ubuntu_repo }} {{ ansible_distribution_release }}-updates main restricted universe multiverse
+deb [allow-insecure=yes,trusted=yes,arch=amd64] {{ ubuntu_repo }} {{ ansible_distribution_release }}-security main restricted universe multiverse
+deb [allow-insecure=yes,trusted=yes,arch=amd64] {{ ubuntu_repo }} {{ ansible_distribution_release }}-backports main restricted universe multiverse

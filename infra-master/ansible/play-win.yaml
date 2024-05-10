@@ -1,0 +1,62 @@
+- name: Learning ansible
+  hosts: windows_hosts
+  gather_facts: flase
+  tasks:
+    - name: check network connectivity
+      win_ping:
+    # - name: Get disk facts
+    #   win_disk_facts:
+    # - name: Set the region format to English Australia and copy settings to new profiles
+    #   win_region:
+    #     format: en-AU
+    - name: Create directory structure
+      win_file:
+        path: C:\shared-files
+        state: directory
+    - name: Copy node exporter installation file
+      win_copy:
+        src: C:\Users\gerami-s\Documents\windows_exporter-0.24.0-amd64.msi
+        dest: C:\shared-files\
+        remote_src: true
+    - name: Set a single address on the adapter named Ethernet
+      win_dns_client:
+        adapter_names: Ethernet0
+        ipv4_addresses: 
+          - 1.1.1.1
+          - 8.8.8.8
+    - name: Set an environment variable for all users
+      win_environment:
+        state: present
+        name: TestVariable
+        value: Test value
+        level: machine
+    - name: Change the hostname to sample-hostname
+      win_hostname:
+        name: win10-terminal
+      register: res
+
+    # - name: Create a mapped drive under Z
+    #   win_mapped_drive:
+    #     letter: Z
+    #     path: \\192.168.26.11\appdata\accounting
+
+    # - name: Create mapped drive with credentials and save the username and password
+    #   block:
+    #   - name: Save the network credentials required for the mapped drive
+    #     win_credential:
+    #       name: server
+    #       type: domain_password
+    #       username: username@DOMAIN
+    #       secret: Password01
+    #       state: present
+
+    - name: Add 127.0.0.1 as an A record for localhost
+      win_hosts:
+        state: present
+        canonical_name: 'google.com'
+        ip_address: 8.8.8.8
+        action: add
+
+    - name: Set timezone to 'Iran Standard Time' (GMT+01:00)
+      win_timezone:
+        timezone: Iran Standard Time

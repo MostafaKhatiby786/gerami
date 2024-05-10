@@ -1,0 +1,2 @@
+- name: Change system swappiness
+  shell: sysctl vm.swappiness={{ swappiness_value }}

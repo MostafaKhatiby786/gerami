@@ -1,0 +1,25 @@
+- name: Install kolla ansible requirements
+  package:
+    name:
+      - git
+      - gcc
+      - libffi-dev
+      - libssl-dev
+      - python3-dev
+      - python3-venv
+      - build-essential
+      - python-is-python3
+
+- name: Ensure local dns record are updated
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: |
+      10.10.10.201 openstack01
+      10.10.10.202 openstack02
+      10.10.10.203 openstack03
+      10.10.10.131 openstack03
+
+- name: Ensure right configuration logrotate for syslog are set
+  template:
+    src: rsyslog.logrotate
+    dest: /etc/logrotate.d/rsyslog

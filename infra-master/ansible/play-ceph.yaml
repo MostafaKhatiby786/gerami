@@ -1,0 +1,17 @@
+- name: Setup ceph cluster nodes
+  hosts: ceph_cluster_01,ceph_old,gerami-test
+  become: true
+  vars:
+    ntp_server: 10.10.10.130
+  roles:
+    - { role: common, tags: [common], ntp_server: 10.10.10.130 }
+    - { role: ceph_common, tags: [ceph_common]}
+    - { role: docker_registry, tags: [docker_registry] }
+    - { role: sshd, tags: [sshd] }
+    - { role: user, tags: [user], username: root }
+
+- name: Setup ceph cluster nodes
+  hosts: ceph01,gerami-test,ceph03
+  become: true
+  roles:
+    - { role: cephadm, tags: [cephadm] }

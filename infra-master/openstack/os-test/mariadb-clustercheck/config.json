@@ -1,0 +1,11 @@
+{
+    "command": "socat  -d -lf/var/log/kolla/mariadb/mariadb-clustercheck.log tcp-l:4569,fork,reuseaddr,bind=10.10.10.221 EXEC:clustercheck",
+    "config_files": [],
+    "permissions": [
+        {
+            "path": "/var/log/kolla/mariadb",
+            "owner": "mysql:mysql",
+            "recurse": true
+        }
+    ]
+}

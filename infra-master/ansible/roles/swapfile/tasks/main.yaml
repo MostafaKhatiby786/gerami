@@ -1,0 +1,26 @@
+- name: Create a file of {{ swapfile_size }}G filled with null bytes
+  community.general.filesize:
+    path: "{{ swapfile_path }}"
+    size: "{{ swapfile_size }}G"
+    mode: u=rw,go=
+    owner: root
+    group: root
+  register: swap_file_changed
+
+- name: Create swap partition
+  shell: mkswap {{ swapfile_path }}
+  when: swap_file_changed.changed
+  # creates: 
+
+- name: add swapfile to the fstab
+  lineinfile:
+    dest: /etc/fstab
+    regexp: "{{ swapfile_path }}"
+    line: "{{ swapfile_path }} swap swap defaults 0 0"
+
+- name: Enable new swapfile
+  shell: swapon {{ swapfile_path }}
+  # shell: swapon -a
+  when: swap_file_changed.changed
+
+# TODO: change system swappiness

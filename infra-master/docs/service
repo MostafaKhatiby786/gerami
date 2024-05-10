@@ -1,0 +1,85 @@
+#####################  ---------------------------------------------------install cluster etcd on etcd nodes-------------------------------------- #####################
+sudo vim /etc/hosts
+10.10.10.50  etcd1
+10.10.10.51  etcd2
+10.10.10.52  etcd3
+
+1. copy link last version etcd in nexus
+ wget http://10.10.10.40:8081/repository/file-server/etcd/etcd-v3.5.5-linux-amd64.tar.gz
+2. ls
+3.tar
+  tar -xvzf etcd-v3.5.5-linux-amd64.tar.gz
+4.  ls -lha
+5. cd etcd-v3.5.5-linux-amd64
+6. ls
+7. cd ..
+8. Unarchive the file and move binaries to /usr/bin directory
+   sudo cp etcd-v3.5.5-linux-amd64/etcd* /usr/bin/
+   etcd --version
+   etcdctl version
+   etcdutl version
+
+[
+sudo groupadd --system etcd
+sudo useradd -s /sbin/nologin --system -g etcd etcd
+Then create data and configurations directories for etcd.
+
+sudo mkdir -p /var/lib/etcd/
+sudo mkdir /etc/etcd
+sudo chown -R etcd:etcd /var/lib/etcd/
+sudo chmod -R 700 /var/lib/etcd/
+]
+
+
+9. create path data
+  sudo mkdir /etcd-data
+  
+10. Configure the etcd on all nodes cluster stcd
+   
+   ###check time on etcd nodes
+   date >>> chech unic
+   ip a >>> ens160
+
+
+INT_NAME="ens160" #replace with your server interface name
+ETCD_HOST_IP=$(ip addr show $INT_NAME | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+ETCD_NAME=$(hostname -s)
+
+echo $INT_NAME
+echo $ETCD_HOST_IP
+echo $ETCD_NAME
+
+exiting  or new
+############# 
+  
+cat <<EOF | sudo tee /etc/systemd/system/etcd.service
+
+[Service]
+ExecStart=/usr/bin/etcd \\
+  --name ${ETCD_NAME} \\
+  --data-dir=/etcd-data \\
+  --initial-advertise-peer-urls http://${ETCD_HOST_IP}:2380 \\
+  --listen-peer-urls http://${ETCD_HOST_IP}:2380 \\
+  --listen-client-urls http://${ETCD_HOST_IP}:2379,http://127.0.0.1:2379 \\
+  --advertise-client-urls http://${ETCD_HOST_IP}:2379 \\
+  --initial-cluster-token qazwsxedc \\
+  --initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380 \\
+  --initial-cluster-state new  \\
+  --auto-compaction-retention 1 \
+  
+
+EOF
+
+
+11. Start the etcd Server
+
+sudo systemctl daemon-reload
+sudo systemctl enable etcd
+sudo systemctl start etcd
+sudo systemctl status etcd.service
+
+12. check >>> etcdctl
+
+etcdctl endpoint status --write-out="table"
+etcdctl member list  --write-out="table"
+etcdctl  endpoint health

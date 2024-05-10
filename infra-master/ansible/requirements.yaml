@@ -1,0 +1,21 @@
+collections:
+  # - name: kubernetes.core
+  #   version: 2.3.2
+  # - name: community.docker
+  #   # version: 2.7.0
+  # - name: community.general
+  #   # version: 6.4.0
+  # - name: ansible.posix
+  #   version: 1.5.1
+  - name: prometheus.prometheus
+    version: 0.4.0
+  - name: hpe.ilo
+    version: 1.0.32
+
+roles:
+  - name: geerlingguy.docker
+    version: 6.1.0
+  - name: geerlingguy.pip
+  # - name: docker
+  #   src: http://10.10.10.80/devops/docker
+  #   version: main

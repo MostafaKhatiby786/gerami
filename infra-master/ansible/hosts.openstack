@@ -1,0 +1,10 @@
+[openstack_cluster]
+openstack01	        ansible_host=10.10.10.201    ansible_port=22    ansible_user=ubuntu
+openstack02	        ansible_host=10.10.10.202    ansible_port=22    ansible_user=ubuntu
+openstack03	        ansible_host=10.10.10.203    ansible_port=22    ansible_user=ubuntu
+openstack04         ansible_host=10.10.10.131    ansible_port=22    ansible_user=sysadm
+
+[openstack_controllers]
+controller 	            ansible_host=10.10.10.47     ansible_port=22    ansible_user=sysadm
+mcontroller	            ansible_host=10.10.10.200    ansible_port=22    ansible_user=sysadm
+openstack-controller	ansible_host=10.10.10.221    ansible_port=22    ansible_user=ubuntu

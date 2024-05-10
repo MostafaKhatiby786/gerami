@@ -1,0 +1,6 @@
+- name: Ensure private registry is setup
+  template:
+    src: daemon.json
+    dest: /etc/docker/
+  notify:
+    - restart docker daemon

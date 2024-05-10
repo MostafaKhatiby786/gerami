@@ -1,0 +1,5 @@
+
+- name: Install ntp
+  ansible.builtin.package:
+    name: ntp
+    state: present

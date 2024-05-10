@@ -1,0 +1,19 @@
+[nodes]
+node01	ansible_host=10.10.10.45    ansible_port=22    ansible_user=sysadm
+node02	ansible_host=10.10.10.46    ansible_port=22
+
+[awx]
+awx1    ansible_host=10.10.10.47    ansible_port=22
+awx2    ansible_host=128.140.77.163 ansible_port=22 ansible_user=root
+
+
+[windows_hosts]
+win10   ansible_host=10.10.10.230
+
+[windows_hosts:vars]
+ansible_port=5986
+ansible_user=ansible
+ansible_password=Ansibl3_P@3s
+ansible_connection=winrm
+ansible_winrm_transport=basic
+ansible_winrm_server_cert_validation=ignore

@@ -1,0 +1,8 @@
+# - name: apt upadte
+#   shell: apt update
+ 
+- name: Install nginx
+  package:
+    name: nginx
+    state: present
+    update_cache: yes

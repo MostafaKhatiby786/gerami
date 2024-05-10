@@ -1,0 +1,29 @@
+# - name: Download foo.conf
+#   ansible.builtin.get_url:
+#     url: http://10.10.10.134:8081/repository/file-server/cephadm/18.2.0/cephadm
+#     dest: /root/
+#     mode: '0700'
+
+- name: Add cephadm Apt signing key, uses whichever key is at the URL
+  ansible.builtin.apt_key:
+    url: http://10.10.10.134:8081/repository/file-server/apt-key-component/cephadm.gpg
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/ceph.gpg
+
+- name: Add ceph repository into sources list
+  ansible.builtin.template:
+    src: ceph-sources.list
+    dest: /etc/apt/sources.list.d/
+  register: apt_source
+
+- name: Update apt repo
+  ansible.builtin.apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Installa cephadm
+  ansible.builtin.apt: 
+    name: cephadm
+    state: present
+    update_cache: yes
+    # upgrade: dist

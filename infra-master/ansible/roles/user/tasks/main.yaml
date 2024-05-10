@@ -1,0 +1,5 @@
+- name: Add new users to host
+  ansible.builtin.user:
+    name: "{{ username }}"
+    group: "{{ groupname }}"
+    password: "{{ '12345' | password_hash('sha512', 'mySecretSalt4') }}"
